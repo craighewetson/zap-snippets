@@ -1,0 +1,13 @@
+.{
+    .name = "zap-snippet",
+    .version = "0.0.0",
+    .dependencies = .{
+        .zap = .{
+            .url = "https://github.com/zigzap/zap/archive/refs/heads/zig-0.12.0.tar.gz",
+            .hash = "12209c908eff51fa4e68dd4a14eca9ff8aecef6155ece65942fe01ce606530363f9c",
+        }
+    },
+    .paths= .{
+        "",
+    }
+}
