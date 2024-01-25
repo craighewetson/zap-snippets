@@ -30,7 +30,8 @@ pub fn main() !void {
         );
         defer listener.deinit();
 
-        _ = try AdminEndpoints.init(&listener);
+        const adminEndpoints = try AdminEndpoints.create(&listener, allocator);
+        defer destroyEndpoints(adminEndpoints, allocator);
 
         // listen
         try listener.listen();
@@ -52,4 +53,11 @@ pub fn main() !void {
     // show potential memory leaks when ZAP is shut down
     const has_leaked = gpa.detectLeaks();
     std.log.debug("Has leaked: {}\n", .{has_leaked});
+}
+
+pub fn destroyEndpoints(endpoints: std.ArrayList(*zap.Endpoint), allocator: std.mem.Allocator) void {
+    for (endpoints.items) |endpoint| {
+        allocator.destroy(endpoint);
+    }
+    endpoints.deinit();
 }
